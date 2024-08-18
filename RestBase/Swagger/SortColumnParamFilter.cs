@@ -18,13 +18,13 @@ public class SortColumnParamFilter : IParameterFilter
         ParameterFilterContext context)
     {
         IEnumerable<SortColumnValidatorAttribute>? attributes = context.ParameterInfo?
-                        .GetCustomAttributes(true)
-                        .Union(        //* Use this if param is complex-type i.e. BaseGetRequest
-                            context.ParameterInfo.ParameterType.GetProperties()
-                            .Where(p => p.Name == parameter.Name)
-                            .SelectMany(p => p.GetCustomAttributes(true))
-                            )
-                        .OfType<SortColumnValidatorAttribute>();
+                .GetCustomAttributes(true)
+                .Union(     //* Use this if param is complex-type i.e. GridDataRequest
+                    context.ParameterInfo.ParameterType.GetProperties()
+                    .Where(p => p.Name == parameter.Name)
+                    .SelectMany(p => p.GetCustomAttributes(true))
+                    )
+                .OfType<SortColumnValidatorAttribute>();
 
         if (attributes is not null)
         {

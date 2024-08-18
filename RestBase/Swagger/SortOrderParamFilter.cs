@@ -17,13 +17,13 @@ public class SortOrderParamFilter : IParameterFilter
         ParameterFilterContext context)
     {
         IEnumerable<SortOrderValidatorAttribute>? attributes = context.ParameterInfo?
-                        .GetCustomAttributes(true)
-                        .Union(          //* Use this if param is complex-type i.e. BaseGetRequest
-                            context.ParameterInfo.ParameterType.GetProperties()
-                            .Where(prop => prop.Name == parameter.Name)
-                            .SelectMany(prop => prop.GetCustomAttributes(true))
-                            )
-                        .OfType<SortOrderValidatorAttribute>();
+                .GetCustomAttributes(true)
+                .Union(        //* Use this if param is complex-type i.e. GridDataRequest
+                    context.ParameterInfo.ParameterType.GetProperties()
+                    .Where(prop => prop.Name == parameter.Name)
+                    .SelectMany(prop => prop.GetCustomAttributes(true))
+                    )
+                .OfType<SortOrderValidatorAttribute>();
 
         if (attributes is not null)
         {

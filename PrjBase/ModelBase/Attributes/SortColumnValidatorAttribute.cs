@@ -12,7 +12,7 @@ public class SortColumnValidatorAttribute : ValidationAttribute
     public Type? ModelType { get; set; }
 
     public SortColumnValidatorAttribute(Type modelType)
-                    : base("Provided field '{0}' must match an existing column.")
+           : base("Provided field '{0}' must match an existing column.")
     {
         ModelType = modelType;
     }
@@ -38,8 +38,13 @@ public class SortColumnValidatorAttribute : ValidationAttribute
         }
         else
         {
-            bool isSortColumnExistInEntity = ModelType.GetProperties()
-                                .Any(prop => prop.Name == strValue);
+            //bool isSortColumnExistInEntity = ModelType.GetProperties()
+            //                    .Any(prop => prop.Name == strValue);
+            bool isSortColumnExistInEntity = ModelType.GetProperties().Any(prop => 
+                                                prop.Name.Equals(
+                                                    strValue
+                                                    , StringComparison.OrdinalIgnoreCase)
+                                            );
 
             if (isSortColumnExistInEntity)
                 return ValidationResult.Success;
